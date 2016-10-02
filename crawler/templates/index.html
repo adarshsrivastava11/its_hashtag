@@ -1,0 +1,14 @@
+<html>
+<head>
+<title>#tag</title>
+</head>
+<body>
+<form action="/" method="post">
+	{% csrf_token %}
+<input type="text" name="company" />
+<input type="text" name="hashtag" />
+<input type="submit" /> 
+<p>{{projected_likes}}</p>
+</form>
+</body>
+</html>

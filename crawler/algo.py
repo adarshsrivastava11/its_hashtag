@@ -2,16 +2,16 @@ from crawler.models import *
 from datetime import datetime
 
 def nominalize(company_a, company_list):
-    model_objects = post_info.objects.get(company=company_a)
+    model_objects = post_info.objects.filter(company=company_a)
     total = 0
-    nominalized_likes = {company_a:{:}}
+    nominalized_likes = {company_a:{}}
     for a in model_objects:
         total = a.no_of_likes + total
         nominalized_likes[company_a][a.id] = a.no_of_likes
         mean1 = total/float(len(model_objects))
     for b in company_list:
-        nominalized_likes[b] = {:}
-        model_objects = post_info.objects.get(company=b)
+        nominalized_likes[b] = {}
+        model_objects = post_info.objects.filter(company=b)
         total_l= 0
         for a in model_objects:
             total_l = a.no_of_likes + total_l
@@ -28,8 +28,8 @@ def predict(nominalized_likes, hashtag, company_list):
     model_objects = post_info.objects.all()
     days = 0
     for b in model_objects:
-        category_list = b.category(',')
-        if hastag in category_list:
+        category_list = b.category.split(',')
+        if hashtag in category_list:
             sigma_wn = sigma_wn + nominalized_likes[b.company][b.id]
             total_weight = total_weight + 2
             days = days + (2*(now.day - b.time.day))
