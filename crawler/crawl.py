@@ -1,7 +1,7 @@
 import requests
 from crawler.models import *
 
-def crawl(graph_url):
+def crawl(graph_url, company):
     r = requests.get(graph_url)
     response = r.json()
     while response["data"]!=[]: 
@@ -15,7 +15,18 @@ def crawl(graph_url):
             response_likes = r.json()
             summary = response_likes["summary"]
             no_of_likes = summary["total_count"]
-            data = post_info(message=message,time=time,id=post_id,no_of_likes = no_of_likes)
+
+            message = message+""" #"""
+            hash_find = message.split("#")
+            
+            len_hash = len(hash_find)
+            h = ""
+            for i in range(1,(len_hash-1)):
+                hash_find_new = hash_find[i].split(" ")
+                hash_find_new[0] = hash_find_new[0].strip()
+                h = h+hash_find_new[0]+","
+            print h
+            data = post_info(message=message,category=h,time=time,id=post_id,no_of_likes = no_of_likes,company=company)
             data.save()
         redir_url = response["paging"]["next"]
         r = requests.get(redir_url)

@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'channels',
+    
     'crawler',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -76,15 +76,11 @@ WSGI_APPLICATION = 'fb_predictor.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 DATABASES = {
-            'default': {
-                        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-                                'NAME': 'fb_aggregator',
-                                        'USER': 'foo',
-                                                'PASSWORD': 'bar',
-                                                        'HOST': 'localhost',
-                                                                'PORT': '',
-                                                                    }
-            }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 
 
@@ -106,12 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CHANNEL_LAYERS = {
-            "default": {
-                        "BACKEND": "asgiref.inmemory.ChannelLayer",
-                                "ROUTING": "fb_predictor.routing.channel_routing",
-                                    },
-            }
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
